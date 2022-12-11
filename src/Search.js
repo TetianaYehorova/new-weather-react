@@ -2,6 +2,7 @@ import "./weather.css";
 import { useState } from "react";
 import Day from "./Day";
 import WeatherIcon from "./WeatherIcon";
+import Temperature from "./Temperature";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -83,10 +84,7 @@ export default function Search(props) {
                       alt={weather.description}
                     />
                   </span>
-                  <span className="main-temp">
-                    {Math.round(weather.temperature)}
-                  </span>
-                  <span className="units">°C|F</span>
+                  <Temperature celsius={weather.temperature} />
                 </h2>
               </Col>
               <Col className="frame">

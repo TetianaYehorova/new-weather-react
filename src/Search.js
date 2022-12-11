@@ -1,6 +1,7 @@
 import "./weather.css";
 import { useState } from "react";
 import Day from "./Day";
+import WeatherIcon from "./WeatherIcon";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -76,15 +77,16 @@ export default function Search(props) {
                   </div>
                 </h1>
                 <h2>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-                    alt={weather.description}
-                  />
-
-                  <span className="main-temp">
-                    {Math.round(weather.temperature)}°
+                  <span className="left-floated">
+                    <WeatherIcon
+                      code={weather.icon}
+                      alt={weather.description}
+                    />
                   </span>
-                  <span className="units">C|F</span>
+                  <span className="main-temp">
+                    {Math.round(weather.temperature)}
+                  </span>
+                  <span className="units">°C|F</span>
                 </h2>
               </Col>
               <Col className="frame">

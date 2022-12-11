@@ -1,5 +1,6 @@
 import "./weather.css";
 import { useState } from "react";
+import Day from "./Day";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -14,6 +15,7 @@ export default function Search(props) {
     setWeather({
       ready: true,
       name: response.data.name,
+      date: new Date(response.data.dt * 1000),
       temperature: response.data.main.temp,
       temperatureFee: response.data.main.feels_like,
       description: response.data.weather[0].main,
@@ -59,7 +61,9 @@ export default function Search(props) {
               <Col className="main-today">
                 <h1>
                   <div className="city">{weather.name}</div>
-                  <div className="date-time">Sun 6 November, 19:20</div>
+                  <div className="date-time">
+                    <Day date={weather.date} />
+                  </div>
                 </h1>
                 <h2>
                   <img

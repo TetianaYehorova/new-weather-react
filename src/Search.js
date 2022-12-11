@@ -17,7 +17,7 @@ export default function Search(props) {
       name: response.data.name,
       date: new Date(response.data.dt * 1000),
       temperature: response.data.main.temp,
-      temperatureFee: response.data.main.feels_like,
+      temperatureFeel: response.data.main.feels_like,
       description: response.data.weather[0].main,
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
@@ -25,13 +25,23 @@ export default function Search(props) {
     });
   }
 
+  function search() {
+    if (city.length > 0) {
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=55107c22b7dbab37f6507113cac269b5&units=metric`;
+      axios.get(url).then(showWeather);
+    }
+  }
   if (weather.ready) {
     function updateCity(event) {
       setCity(event.target.value);
     }
+    function handleSubmit(event) {
+      event.preventDefault();
+      search();
+    }
     return (
       <div>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Row>
               <Col xs={8}>
@@ -112,10 +122,7 @@ export default function Search(props) {
       </div>
     );
   } else {
-    if (city.length > 0) {
-      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=55107c22b7dbab37f6507113cac269b5&units=metric`;
-      axios.get(url).then(showWeather);
-    }
+    search();
     return "Loading...";
   }
 }

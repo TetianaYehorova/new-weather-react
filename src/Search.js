@@ -3,6 +3,7 @@ import { useState } from "react";
 import Day from "./Day";
 import WeatherIcon from "./WeatherIcon";
 import Temperature from "./Temperature";
+import Forecast from "./Forecast";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -17,6 +18,7 @@ export default function Search(props) {
     setWeather({
       ready: true,
       name: response.data.name,
+      coordinates: response.data.coord,
       date: new Date(response.data.dt * 1000),
       temperature: response.data.main.temp,
       temperatureFeel: response.data.main.feels_like,
@@ -29,7 +31,7 @@ export default function Search(props) {
 
   function search() {
     if (city.length > 0) {
-      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=55107c22b7dbab37f6507113cac269b5&units=metric`;
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0fb7bbca6bdeb1e04cdb41a440892090&units=metric`;
       axios.get(url).then(showWeather);
     }
   }
@@ -82,6 +84,7 @@ export default function Search(props) {
                     <WeatherIcon
                       code={weather.icon}
                       alt={weather.description}
+                      size={64}
                     />
                   </span>
                   <Temperature celsius={weather.temperature} />
@@ -119,6 +122,7 @@ export default function Search(props) {
             </Row>
           </Form.Group>
         </Form>
+        <Forecast coordinates={weather.coordinates} />
       </div>
     );
   } else {

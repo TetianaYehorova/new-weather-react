@@ -35,6 +35,11 @@ export default function Search(props) {
       axios.get(url).then(showWeather);
     }
   }
+  function searchLocal(pos) {
+    let crd = pos.coords;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=73a00877081bd43422bdee0f3022beb5&units=metric`;
+    axios.get(url).then(showWeather);
+  }
   if (weather.ready) {
     function updateCity(event) {
       setCity(event.target.value);
@@ -42,6 +47,10 @@ export default function Search(props) {
     function handleSubmit(event) {
       event.preventDefault();
       search();
+    }
+    function handleSubmitNew(event) {
+      event.preventDefault();
+      navigator.geolocation.getCurrentPosition(searchLocal);
     }
     return (
       <div>
@@ -62,7 +71,11 @@ export default function Search(props) {
                 </Button>
               </Col>
               <Col>
-                <Button variant="secondary" type="submit">
+                <Button
+                  variant="secondary"
+                  type="submit"
+                  onClick={handleSubmitNew}
+                >
                   Local
                 </Button>
               </Col>
